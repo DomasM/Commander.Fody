@@ -83,7 +83,7 @@ namespace Commander.Fody
                         , method
                         , commandName
                         , type.Name);
-                    var command = Assets.Commands.GetOrAdd(commandName, name => new CommandData(type, name));
+                    var command = Assets.Commands.GetOrAdd(new DictKey {CommandName = commandName, TypeName = type.Name}, dk => new CommandData(type, dk.CommandName));
                     command.OnExecuteMethods.Add(method);
                 }
             }
@@ -120,7 +120,7 @@ namespace Commander.Fody
                         , method
                         , commandName
                         , type.Name);
-                    var command = Assets.Commands.GetOrAdd(commandName, name => new CommandData(type, name));
+                    var command = Assets.Commands.GetOrAdd(new DictKey { CommandName = commandName, TypeName = type.Name }, dk => new CommandData(type, dk.CommandName));
                     command.CanExecuteMethods.Add(method);
                 }
             }
