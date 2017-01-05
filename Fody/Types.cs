@@ -91,6 +91,8 @@ namespace Commander.Fody
             _boolean = moduleDefinition.TypeSystem.Boolean;
 
             var targetFramework = moduleDefinition.Assembly.GetTargetFramework();
+            _moduleWeaver.LogWarning(string.Format("targetFramework is {0}", targetFramework));
+
             var assemblyResolver = ModuleDefinition.AssemblyResolver;
             var msCoreTypes = GetMscorlibTypes(targetFramework);
 
@@ -434,6 +436,7 @@ namespace Commander.Fody
             //}
             var assemblyResolver = ModuleDefinition.AssemblyResolver;
             var corlibFullName = (AssemblyNameReference)ModuleDefinition.TypeSystem.Corlib;
+            _moduleWeaver.LogWarning($"corlib is {corlibFullName}");
             try
             {
                 var msCoreLibDefinition = assemblyResolver.Resolve(corlibFullName);

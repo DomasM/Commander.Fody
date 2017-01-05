@@ -9,6 +9,12 @@ using Mono.Cecil.Rocks;
 
 namespace Commander.Fody
 {
+    public class DictKey
+    {
+        public string CommandName { get; set; }
+        public string TypeName { get; set; }
+
+    }
     public class Assets
     {                
         private readonly Lazy<List<TypeDefinition>> _allClasses;
@@ -16,7 +22,7 @@ namespace Commander.Fody
         private readonly IFodyLogger _log;
         private readonly ITypeReferences _typeReferences;
         private readonly ITypeDefinitions _typeDefinitions;
-        private readonly ConcurrentDictionary<string, CommandData> _commands;
+        private readonly ConcurrentDictionary<DictKey, CommandData> _commands;
 
         private readonly MethodReference _funcOfBoolConstructorReference;
         private readonly MethodReference _objectConstructorReference;
@@ -40,7 +46,7 @@ namespace Commander.Fody
                 throw new ArgumentNullException("moduleWeaver");
             }
 
-            _commands = new ConcurrentDictionary<string, CommandData>();
+            _commands = new ConcurrentDictionary<DictKey, CommandData>();
             _moduleDefinition = moduleWeaver.ModuleDefinition;
             _log = moduleWeaver;
             var settings = moduleWeaver.Settings;
@@ -163,7 +169,7 @@ namespace Commander.Fody
             get { return _predicateOfTInvokeReference; }
         }
 
-        public ConcurrentDictionary<string, CommandData> Commands
+        public ConcurrentDictionary<DictKey, CommandData> Commands
         {
             get { return _commands; }
         }
